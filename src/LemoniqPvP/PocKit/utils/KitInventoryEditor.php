@@ -6,6 +6,7 @@ use dktapps\pmforms\ModalForm;
 use LemoniqPvP\PocKit\Main;
 use muqsit\invmenu\InvMenu;
 use pocketmine\inventory\Inventory;
+use pocketmine\item\StringToItemParser;
 use pocketmine\item\Item;
 use pocketmine\player\Player;
 
@@ -18,8 +19,13 @@ class KitInventoryEditor {
         $kit = $kits[$kitId];
 
         $items = [];
-        foreach ($kit["items"] as $item) {
-            $items[]= Item::jsonDeserialize($item);
+        foreach ($kit["items"] as $itemString) {
+            $item = StringToItemParser::parse($itemString, true, true);
+            if ($item !== null) {
+                $items[] = $item;
+            } else {
+                $player->sendMessage("Failed to load an item from the kit. Please check the kit configuration.");
+            }
         }
 
         $menu->getInventory()->setContents($items);
@@ -29,7 +35,7 @@ class KitInventoryEditor {
             $form = new ModalForm("Kit " . $kitId, "Do you want to confirm your changes?", function(Player $player, bool $choice) use ($kitId, $kit, $inventory): void {
                 if ($choice) {
                     $kit["items"] = array_map(function(Item $item) {
-                        return $item->jsonSerialize();
+                        return StringToItemParser::itemToString($item);
                     }, $inventory->getContents());
                     ConfigUtils::updateKit($kitId, $kit);
                 }
