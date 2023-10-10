@@ -40,6 +40,7 @@ class KitInventoryEditor {
                     ConfigUtils::updateKit($kitId, $kit);
                 }
                 PresetForms::kitEditSelection($player, $kitId);
+                return;
             });
             $player->sendForm($form);
         });
