@@ -6,8 +6,9 @@ projects:
   Pockit:
     path: ""
     libs:
-      - src: Muqsit/InvMenu/InvMenu
-        version: 4.3.8
+      - src: muqsit/InvMenu/InvMenu
+        version: ^4.5.3
+        branch: "4.0"
       - src: dktapps-pm-pl/pmforms/pmforms
         version: ~2.0.0
 ...
