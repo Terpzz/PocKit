@@ -6,7 +6,7 @@ use LemoniqPvP\PocKit\Main;
 use LemoniqPvP\PocKit\tasks\CooldownTask;
 use pocketmine\player\Player;
 use muqsit\invmenu\InvMenu;
-use pocketmine\item\Item;
+use pocketmine\item\StringToItemParser;
 use pocketmine\utils\TextFormat;
 
 class KitGiver {
@@ -30,7 +30,7 @@ class KitGiver {
 
         $kit = $kits[$kitId];
 
-        if (!$player->hasPermission("pockit.kit." . strtolower(str_replace(" ", "_",$kitId))) && $kit["private"]) {
+        if (!$player->hasPermission("pockit.kit." . strtolower(str_replace(" ", "_", $kitId)) ) && $kit["private"]) {
             $player->sendMessage("You do not have permission to use this kit!");
             return false;
         }
@@ -45,8 +45,11 @@ class KitGiver {
             $player->getArmorInventory()->clearAll();
 
             $items = [];
-            foreach ($kit["items"] as $item) {
-                $items[]= Item::jsonDeserialize($item);
+            foreach ($kit["items"] as $itemString) {
+                $item = StringToItemParser::parse($itemString, true, true);
+                if ($item !== null) {
+                    $items[] = $item;
+                }
             }
 
             $player->getInventory()->setContents($items);
@@ -55,8 +58,11 @@ class KitGiver {
             $menu = InvMenu::create(InvMenu::TYPE_CHEST);
 
             $items = [];
-            foreach ($kit["items"] as $item) {
-                $items[]= Item::jsonDeserialize($item);
+            foreach ($kit["items"] as $itemString) {
+                $item = StringToItemParser::parse($itemString, true, true);
+                if ($item !== null) {
+                    $items[] = $item;
+                }
             }
 
             $menu->getInventory()->setContents($items);
@@ -78,5 +84,4 @@ class KitGiver {
         $dtT = new \DateTime("@$seconds");
         return $dtF->diff($dtT)->format('%a days, %h hours, %i minutes and %s seconds');
     }
-
 }
