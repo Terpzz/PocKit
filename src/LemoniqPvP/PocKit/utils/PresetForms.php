@@ -41,11 +41,11 @@ class PresetForms {
         $options = [new MenuOption("Rename") ];
 
         if ($kit["private"] === true) {
-            $ifPrivatePermDisplay = "This kit can only be used by players with the permission pockit.kit." . strtolower(str_replace(" ", "_",$kitId));
-            $options[]=new MenuOption("Private: ". TextFormat::GREEN . "true");
+        $ifPrivatePermDisplay = "This kit can only be used by players with the permission pockit.kit." . strtolower(str_replace(" ", "_",$kitId));
+        $options[]=new MenuOption("Private: ". TextFormat::GREEN . "true");
         } else {
-            $ifPrivatePermDisplay = "";
-            $options[]=new MenuOption("Private: ". TextFormat::RED . "false");
+        $ifPrivatePermDisplay = "";
+        $options[]=new MenuOption("Private: ". TextFormat::RED . "false");
         }
 
         if ($kit["clear"] === true) {
