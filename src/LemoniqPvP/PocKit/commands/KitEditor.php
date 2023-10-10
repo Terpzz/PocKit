@@ -28,19 +28,18 @@ class KitEditor implements CommandExecutor {
             }
 
             $form = new MenuForm(
-                "Kit Editor",
-                "Select a kit to edit",
-                $options,
-                function(Player $player, int $selectedOption) use ($options, $optionNames, $config): void {
-                    $kits = $config->get("kits");
-                    
-                    $kitId = $optionNames[$selectedOption];
-                    $kit = $kits[$kitId];
+            "Kit Editor",
+            "Select a kit to edit",
+            $options,
+            function(Player $player, int $selectedOption) use ($optionNames, $config): void {
+            $kits = $config->get("kits");
 
-                    PresetForms::kitEditSelection($player, $kitId);
+            $kitId = $optionNames[$selectedOption];
+            $kit = $kits[$kitId];
 
-                }
-            );
+            PresetForms::kitEditSelection($player, $kitId);
+            }
+        );
 
             $sender->sendForm($form);
 
