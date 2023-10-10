@@ -47,10 +47,10 @@ class Kit implements CommandExecutor {
                     }
                 }
 
-                $form = new MenuForm("Kits", "Choose a kit", $options, function(Player $player, int $selectedOption) use ($kits, $optionIds): void {
-                    $kitId = $optionIds[$selectedOption];
+                $form = new MenuForm("Kits", "Choose a kit", $options, function(Player $player, int $selectedOption) use ($optionIds): void {
+                $kitId = $optionIds[$selectedOption];
 
-                    KitGiver::giveKit($player, $kitId);
+                KitGiver::giveKit($player, $kitId);
                 });
 
                 $sender->sendForm($form);
